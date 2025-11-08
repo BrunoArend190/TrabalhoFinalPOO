@@ -1,3 +1,4 @@
+//Atividade 1 : Modelagem de um Sistema de Biblioteca
 
 class Livro {
     // Atributos (Propriedades) da classe Livro.
@@ -7,7 +8,7 @@ class Livro {
     public anoPublicacao: number;   
     public disponivel: boolean;
     
-    // CONSTRUTOR: Método especial chamado ao criar um novo objeto Livro.
+    // CONSTRUTOR: Inicializa os atributos básicos de qualquer livro.
     constructor(titulo: string, autor: string, editora: string, anoPublicacao: number) {
         this.titulo = titulo;
         this.autor = autor;
