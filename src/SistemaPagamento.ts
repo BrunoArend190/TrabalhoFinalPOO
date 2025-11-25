@@ -1,4 +1,4 @@
-//Atividade 2 : Sistema de Pagamento
+//Atividade 3 : Sistema de Pagamento
 
 // 1. CLASSE ContaBancaria
 
@@ -38,7 +38,7 @@ class ContaBancaria {
         return this.historicoMovimentacoes;
     }
 
-    // Este é um método privado, uma função AUXILIAR interna da classe, que só ela pode usar.
+    // uma função AUXILIAR interna da classe, que só ela pode usar.
     private registrarMovimentacao(descricao: string): void {
         this.historicoMovimentacoes.push(`[${new Date().toLocaleTimeString()}] ${descricao}`);
     }
@@ -82,7 +82,7 @@ class CartaoCredito implements MeioPagamento {
     // Dados sensíveis PRIVADOS por segurança (Encapsulamento).
     private numeroCartao: string;
     private cvv: string;
-    private limiteDisponivel: number; // Atributo útil para a lógica de validação.
+    private limiteDisponivel: number; 
 
     constructor(numero: string, cvv: string, limite: number) {
         this.numeroCartao = numero;
@@ -102,7 +102,7 @@ class CartaoCredito implements MeioPagamento {
 
         // Relacionamento (Uso): Usa a ContaBancaria para registrar o Crédito (o pagamento entra na conta).
         conta.creditar(valor, `Pagamento recebido via Cartão de Crédito`);
-        this.limiteDisponivel -= valor; // Reduz o limite (interação interna).
+        this.limiteDisponivel -= valor; // Reduz o limite 
 
         console.log(`\t SUCESSO CC. Novo limite: R$ ${this.limiteDisponivel.toFixed(2)}`);
         return true;
@@ -124,7 +124,7 @@ class CartaoDebito implements MeioPagamento {
         console.log(`\nProcessando CD R$ ${valor.toFixed(2)} da conta ${contaOrigem.numConta}`);
 
         // Validação Exclusiva + Relacionamento (Uso): Usa o método 'debitar' da Conta.
-        // O débito só ocorre se o saldo for suficiente (validação está DENTRO da ContaBancaria).
+        // O débito só ocorre se o saldo for suficiente
         if (contaOrigem.debitar(valor, `Pagamento via Cartão de Débito`)) {
             console.log(`\t SUCESSO CD. Débito realizado na conta ${contaOrigem.numConta}.`);
             return true;
@@ -139,7 +139,7 @@ class CartaoDebito implements MeioPagamento {
 // Boleto Bancário
 class BoletoBancario implements MeioPagamento {
     private linhaDigitavel: string;
-    private dataVencimento: Date; // Atributo útil para a lógica de validação.
+    private dataVencimento: Date; 
 
     constructor(vencimento: Date) {
         this.linhaDigitavel = `34191... ${Math.floor(Math.random() * 999999)}`;
@@ -191,7 +191,7 @@ class Pix implements MeioPagamento {
 
 // 5. INSTANCIAÇÃO E 6. SIMULAÇÃO
 
-// Criando 4 contas bancárias para movimentação.
+// Criando contas bancárias para movimentação.
 const contaCliente = new ContaBancaria("Cliente A", "1001-X", 500.00);
 const contaLoja = new ContaBancaria("Loja B", "2002-Y", 1000.00);
 const contaFornecedor = new ContaBancaria("Fornecedor C", "3003-Z", 50.00);
@@ -248,10 +248,10 @@ console.log('VERIFICAÇÃO FINAL DE SALDOS E HISTÓRICOS');
 console.log('======================================================');
 
 [contaCliente, contaLoja, contaFornecedor, contaSalario].forEach(conta => {
-    // Usamos os Getters aqui, pois ler os atributos privados diretamente seria incorreto.
+    // Uso do GETTER público para ler os dados encapsulados.
     console.log(`\nConta: ${conta.titularConta} (${conta.numConta})`); 
     console.log(`SALDO FINAL: R$ ${conta.saldo.toFixed(2)}`);
     console.log('--- Histórico de Movimentações ---');
-    // Exibição do histórico de logs (o último requisito da atividade).
+    // Exibição do histórico de logs da conta.
     conta.historico.forEach(mov => console.log(`\t- ${mov}`));
 });
